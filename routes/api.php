@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
+use App\Http\Controllers\Api\V1\Material\MaterialCategoryController;
+use App\Http\Controllers\Api\V1\Material\MaterialController;
 use App\Http\Controllers\Api\V1\Product\ProductCategoryController;
 use App\Http\Controllers\Api\V1\Product\ProductController;
 
@@ -38,5 +40,14 @@ Route::middleware('auth:sanctum')
             ProductCategoryController::class
         );
         Route::apiResource('products', ProductController::class);
+          Route::apiResource(
+            'material-categories',
+            MaterialCategoryController::class
+        );
+
+        Route::apiResource(
+            'materials',
+            MaterialController::class
+        );
 
     });
