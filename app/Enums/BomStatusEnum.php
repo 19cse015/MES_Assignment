@@ -8,5 +8,5 @@ enum BomStatusEnum:string
 
     case APPROVED='approved';
 
-    case ARCHIVED='archived';
+
 }

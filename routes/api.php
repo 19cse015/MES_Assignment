@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Material\MaterialCategoryController;
 use App\Http\Controllers\Api\V1\Material\MaterialController;
+use App\Http\Controllers\Api\V1\Product\BomController;
 use App\Http\Controllers\Api\V1\Product\ProductCategoryController;
 use App\Http\Controllers\Api\V1\Product\ProductController;
 
@@ -48,6 +49,16 @@ Route::middleware('auth:sanctum')
         Route::apiResource(
             'materials',
             MaterialController::class
+        );
+         Route::apiResource(
+            'boms',
+            BomController::class
+        );
+
+        // BOM Approval
+        Route::patch(
+            'boms/{id}/approve',
+            [BomController::class, 'approve']
         );
 
     });

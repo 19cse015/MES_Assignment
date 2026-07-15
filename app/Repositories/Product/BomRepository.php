@@ -7,15 +7,35 @@ use App\Repositories\BaseRepository;
 
 class BomRepository extends BaseRepository
 {
-    protected array $filterable = [
-        'product_id',
-        'status'
+    protected array $relations = [
+        'product',
+        'items.material',
+        'approver',
     ];
 
+    /**
+     * Searchable Columns
+     */
+    protected array $searchable = [
+        'version',
+    ];
+
+    /**
+     * Filterable Columns
+     */
+    protected array $filterable = [
+        'product_id',
+        'status',
+    ];
+
+    /**
+     * Sortable Columns
+     */
     protected array $sortable = [
         'id',
         'version',
-        'created_at'
+        'status',
+        'created_at',
     ];
 
     public function __construct(Bom $model)
