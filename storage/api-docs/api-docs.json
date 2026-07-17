@@ -1299,6 +1299,142 @@
                     }
                 ]
             }
+        },
+        "/api/v1/production-orders": {
+            "post": {
+                "tags": [
+                    "Production Orders"
+                ],
+                "summary": "Create Production Order",
+                "description": "Creates a new production order using the latest approved BOM for the selected product.",
+                "operationId": "storeProductionOrder",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "product_id",
+                                    "quantity"
+                                ],
+                                "properties": {
+                                    "product_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "example": 100
+                                    },
+                                    "remarks": {
+                                        "type": "string",
+                                        "example": "Urgent production order"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Production order created successfully"
+                    },
+                    "422": {
+                        "description": "Validation failed or approved BOM not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/production-orders/{productionOrder}/plan": {
+            "patch": {
+                "tags": [
+                    "Production Orders"
+                ],
+                "summary": "Plan Production Order",
+                "description": "Changes the production order status from Draft to Planned.",
+                "operationId": "planProductionOrder",
+                "parameters": [
+                    {
+                        "name": "productionOrder",
+                        "in": "path",
+                        "description": "Production Order ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Production order planned successfully"
+                    },
+                    "404": {
+                        "description": "Production order not found"
+                    },
+                    "422": {
+                        "description": "Only draft production orders can be planned"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/production-orders/{productionOrder}/release": {
+            "patch": {
+                "tags": [
+                    "Production Orders"
+                ],
+                "summary": "Release Production Order",
+                "description": "Checks raw material inventory, reserves inventory, and changes the production order status from Planned to Released.",
+                "operationId": "releaseProductionOrder",
+                "parameters": [
+                    {
+                        "name": "productionOrder",
+                        "in": "path",
+                        "description": "Production Order ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Production order released successfully"
+                    },
+                    "404": {
+                        "description": "Production order not found"
+                    },
+                    "422": {
+                        "description": "Insufficient raw material inventory or invalid production order status"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1501,6 +1637,10 @@
         {
             "name": "Products",
             "description": "Products"
+        },
+        {
+            "name": "Production Orders",
+            "description": "Production Orders"
         }
     ]
 }

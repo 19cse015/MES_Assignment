@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
 
            // BomSeeder::class,
             //BomItemSeeder::class,
+            RawMaterialInventorySeeder::class
 
         ]);
     }
