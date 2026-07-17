@@ -37,10 +37,7 @@ class StoreBomRequest extends FormRequest
                 'min:1',
             ],
 
-            'status' => [
-                'required',
-                Rule::enum(BomStatusEnum::class),
-            ],
+
 
             'items' => [
                 'required',

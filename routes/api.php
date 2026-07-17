@@ -92,13 +92,10 @@ Route::prefix("v1")->group(function () {
         );
     });
 });
-/*
-    |--------------------------------------------------------------------------
-    | Material
-    |--------------------------------------------------------------------------
-    */
 
-Route::middleware([
+
+Route::prefix("v1")->group(function(){
+    Route::middleware([
     'auth:sanctum',
     'role:system_admin,warehouse_manager'
 ])->group(function () {
@@ -112,4 +109,5 @@ Route::middleware([
         'materials',
         MaterialController::class
     );
+});
 });

@@ -41,7 +41,7 @@ class BomService
             $bom = $this->repository->create([
                 'product_id' => $data['product_id'],
                 'version' => $data['version'],
-                'status' => $data['status'],
+                'status'     => BomStatusEnum::DRAFT->value
             ]);
 
             $this->createItems(

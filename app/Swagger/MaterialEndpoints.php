@@ -4,13 +4,14 @@ namespace App\Swagger;
 
 use OpenApi\Attributes as OA;
 
-class ProductCategoryEndpoints
+class MaterialEndpoints
 {
     #[OA\Get(
-        path: "/product-categories",
-        operationId: "getProductCategories",
-        tags: ["Product Categories"],
-        summary: "Get Product Categories",
+        path: "/materials",
+        operationId: "getMaterials",
+        tags: ["Materials"],
+        summary: "Get Materials",
+        description: "Retrieve materials with search, filter, sorting and pagination.",
         security: [["bearerAuth" => []]],
 
         parameters: [
@@ -18,86 +19,121 @@ class ProductCategoryEndpoints
             new OA\Parameter(
                 name: "search",
                 in: "query",
-                description: "Search by category name",
+                description: "Search by material name",
                 schema: new OA\Schema(
                     type: "string",
-                    example: "Ultrabook"
+                    example: "Steel"
                 )
             ),
 
             new OA\Parameter(
-                name: "name",
+                name: "category_id",
                 in: "query",
-                description: "Filter by category name",
+                description: "Filter by category",
+                schema: new OA\Schema(
+                    type: "integer",
+                    example: 1
+                )
+            ),
+
+            new OA\Parameter(
+                name: "unit",
+                in: "query",
+                description: "Filter by unit",
                 schema: new OA\Schema(
                     type: "string",
-                    example: "Ultrabook"
+                    example: "kg"
                 )
             ),
 
             new OA\Parameter(
                 name: "sort",
                 in: "query",
-                description: "Sort field (-created_at, created_at, name, -name)",
+                description: "Sort field (-created_at,name,unit)",
                 schema: new OA\Schema(
                     type: "string",
-                    example: "-name"
+                    example: "-created_at"
                 )
             ),
 
             new OA\Parameter(
                 name: "per_page",
                 in: "query",
-                description: "Items per page",
                 schema: new OA\Schema(
                     type: "integer",
                     default: 10
                 )
             )
+
         ],
 
         responses: [
+
             new OA\Response(
                 response: 200,
-                description: "Product categories retrieved successfully"
+                description: "Materials retrieved successfully"
+            ),
+
+            new OA\Response(
+                response: 401,
+                description: "Unauthenticated"
             )
+
         ]
     )]
     public function index() {}
     #[OA\Post(
-        path: "/product-categories",
-        operationId: "storeProductCategory",
-        tags: ["Product Categories"],
-        summary: "Create a product category",
+        path: "/materials",
+        operationId: "storeMaterial",
+        tags: ["Materials"],
+        summary: "Create Material",
         security: [["bearerAuth" => []]],
 
         requestBody: new OA\RequestBody(
+
             required: true,
+
             content: new OA\JsonContent(
-                required: ["name"],
+
+                required: [
+
+                    "category_id",
+                    "name",
+                    "unit"
+
+                ],
+
                 properties: [
+
+                    new OA\Property(
+                        property: "category_id",
+                        type: "integer",
+                        example: 1
+                    ),
 
                     new OA\Property(
                         property: "name",
                         type: "string",
-                        example: "Furniture"
+                        example: "Steel Rod"
                     ),
 
                     new OA\Property(
-                        property: "description",
+                        property: "unit",
                         type: "string",
-                        example: "Wooden furniture"
+                        example: "kg"
                     )
 
                 ]
+
             )
+
         ),
 
         responses: [
 
             new OA\Response(
                 response: 201,
-                description: "Category created successfully"
+                description: "Material created successfully"
             ),
 
             new OA\Response(
@@ -109,10 +145,10 @@ class ProductCategoryEndpoints
     )]
     public function store() {}
     #[OA\Get(
-        path: "/product-categories/{id}",
-        operationId: "showProductCategory",
-        tags: ["Product Categories"],
-        summary: "Get product category by ID",
+        path: "/materials/{id}",
+        operationId: "showMaterial",
+        tags: ["Materials"],
+        summary: "Get Material Details",
         security: [["bearerAuth" => []]],
 
         parameters: [
@@ -121,7 +157,9 @@ class ProductCategoryEndpoints
                 name: "id",
                 in: "path",
                 required: true,
-                schema: new OA\Schema(type: "integer")
+                schema: new OA\Schema(
+                    type: "integer"
+                )
             )
 
         ],
@@ -130,22 +168,22 @@ class ProductCategoryEndpoints
 
             new OA\Response(
                 response: 200,
-                description: "Category retrieved successfully"
+                description: "Material retrieved successfully"
             ),
 
             new OA\Response(
                 response: 404,
-                description: "Category not found"
+                description: "Material not found"
             )
 
         ]
     )]
     public function show() {}
     #[OA\Put(
-        path: "/product-categories/{id}",
-        operationId: "updateProductCategory",
-        tags: ["Product Categories"],
-        summary: "Update product category",
+        path: "/materials/{id}",
+        operationId: "updateMaterial",
+        tags: ["Materials"],
+        summary: "Update Material",
         security: [["bearerAuth" => []]],
 
         parameters: [
@@ -160,48 +198,57 @@ class ProductCategoryEndpoints
         ],
 
         requestBody: new OA\RequestBody(
+
             required: true,
+
             content: new OA\JsonContent(
 
                 properties: [
 
                     new OA\Property(
-                        property: "name",
-                        type: "string",
-                        example: "Furniture"
+                        property: "category_id",
+                        type: "integer",
+                        example: 1
                     ),
 
                     new OA\Property(
-                        property: "description",
+                        property: "name",
                         type: "string",
-                        example: "Updated Description"
+                        example: "Steel Rod"
+                    ),
+
+                    new OA\Property(
+                        property: "unit",
+                        type: "string",
+                        example: "kg"
                     )
 
                 ]
 
             )
+
         ),
 
         responses: [
 
             new OA\Response(
                 response: 200,
-                description: "Category updated successfully"
+                description: "Material updated successfully"
             ),
 
             new OA\Response(
                 response: 404,
-                description: "Category not found"
+                description: "Material not found"
             )
 
         ]
     )]
     public function update() {}
     #[OA\Delete(
-        path: "/product-categories/{id}",
-        operationId: "deleteProductCategory",
-        tags: ["Product Categories"],
-        summary: "Delete product category",
+        path: "/materials/{id}",
+        operationId: "deleteMaterial",
+        tags: ["Materials"],
+        summary: "Delete Material",
         security: [["bearerAuth" => []]],
 
         parameters: [
@@ -210,7 +257,9 @@ class ProductCategoryEndpoints
                 name: "id",
                 in: "path",
                 required: true,
-                schema: new OA\Schema(type: "integer")
+                schema: new OA\Schema(
+                    type: "integer"
+                )
             )
 
         ],
@@ -219,12 +268,12 @@ class ProductCategoryEndpoints
 
             new OA\Response(
                 response: 200,
-                description: "Category deleted successfully"
+                description: "Material deleted successfully"
             ),
 
             new OA\Response(
                 response: 404,
-                description: "Category not found"
+                description: "Material not found"
             )
 
         ]
