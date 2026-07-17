@@ -10,19 +10,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
 {
     protected Model $model;
 
-    /**
-     * কোন কোন field search করা যাবে
-     */
+
     protected array $searchable = [];
 
-    /**
-     * কোন কোন field filter করা যাবে
-     */
+
     protected array $filterable = [];
 
-    /**
-     * কোন কোন field sort করা যাবে
-     */
+
     protected array $sortable = [];
     protected array $relations = [];
 

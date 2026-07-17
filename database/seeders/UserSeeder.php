@@ -14,15 +14,38 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        User::insert([
 
-            'role_id'=>1,
-
-            'name'=>'Admin',
-
-            'email'=>'admin@example.com',
-
-            'password'=>Hash::make('password')
+            [
+                'name' => 'System Admin',
+                'email' => 'admin@example.com',
+                'password' => Hash::make('password'),
+                'role_id' => 1,
+            ],
+            [
+                'name' => 'Production Manager',
+                'email' => 'pm@example.com',
+                'password' => Hash::make('password'),
+                'role_id' => 2,
+            ],
+            [
+                'name' => 'Warehouse Manager',
+                'email' => 'wm@example.com',
+                'password' => Hash::make('password'),
+                'role_id' => 3,
+            ],
+            [
+                'name' => 'Machine Operator',
+                'email' => 'operator@example.com',
+                'password' => Hash::make('password'),
+                'role_id' => 4,
+            ],
+            [
+                'name' => 'Quality Inspector',
+                'email' => 'qa@example.com',
+                'password' => Hash::make('password'),
+                'role_id' => 5,
+            ],
 
         ]);
     }

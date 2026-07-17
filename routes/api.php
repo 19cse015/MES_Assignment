@@ -32,7 +32,7 @@ Route::prefix('v1')->group(function () {
 
 
 
-Route::middleware('auth:sanctum')
+/* Route::middleware('auth:sanctum')
     ->prefix('v1')
     ->group(function () {
 
@@ -62,3 +62,54 @@ Route::middleware('auth:sanctum')
         );
 
     });
+ */
+
+
+Route::prefix("v1")->group(function () {
+    Route::middleware([
+        'auth:sanctum',
+        'role:system_admin,production_manager'
+    ])->group(function () {
+
+        Route::apiResource(
+            'product-categories',
+            ProductCategoryController::class
+        );
+
+        Route::apiResource(
+            'products',
+            ProductController::class
+        );
+
+        Route::apiResource(
+            'boms',
+            BomController::class
+        );
+
+        Route::patch(
+            'boms/{id}/approve',
+            [BomController::class, 'approve']
+        );
+    });
+});
+/*
+    |--------------------------------------------------------------------------
+    | Material
+    |--------------------------------------------------------------------------
+    */
+
+Route::middleware([
+    'auth:sanctum',
+    'role:system_admin,warehouse_manager'
+])->group(function () {
+
+    Route::apiResource(
+        'material-categories',
+        MaterialCategoryController::class
+    );
+
+    Route::apiResource(
+        'materials',
+        MaterialController::class
+    );
+});

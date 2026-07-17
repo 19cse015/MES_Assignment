@@ -29,10 +29,7 @@ class ProductResource extends JsonResource
             'specification' => $this->specification,
 
             'status' => $this->status,
-
-            'created_at' => $this->created_at,
-
-            'updated_at' => $this->updated_at,
+,
         ];
     }
 }
